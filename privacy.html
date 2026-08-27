@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>개인정보처리방침 - PLC 코멘트 뷰어</title>
+<style>
+  :root { --bg:#fff; --fg:#1a1a1a; --accent:#12395e; --line:#d5dbe1; --soft:#eef3f8; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14171a; --fg:#e6e6e6; --accent:#8ec5ff; --line:#2c343b; --soft:#1e2429; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Malgun Gothic", sans-serif; line-height: 1.7;
+         max-width: 780px; margin: 0 auto; padding: 24px 18px 80px; color: var(--fg); background: var(--bg); }
+  h1 { font-size: 1.7rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+  h2 { font-size: 1.2rem; margin-top: 2em; color: var(--accent); }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; font-size: .95rem; }
+  th { background: var(--soft); }
+  code { background: var(--soft); padding: 1px 5px; border-radius: 3px; font-size: .9em; }
+  li { margin: .3em 0; }
+  nav { margin-bottom: 24px; font-size: .9rem; }
+  footer { margin-top: 60px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .85rem; opacity: .8; }
+</style>
+</head>
+<body>
+<nav><a href="./">&larr; 앱 소개로</a></nav>
+<h1>개인정보처리방침 — PLC 코멘트 뷰어</h1>
+
+<p>최종 수정일: 2026년 8월 27일</p>
+
+<h2>요약</h2>
+
+<p><strong>이 앱은 개인정보를 수집하지 않습니다.</strong> 서버로 보내는 데이터가 없고, 광고나 분석 도구도</p>
+<p>넣지 않았습니다. 앱이 통신하는 상대는 사용자가 직접 입력한 PLC 뿐입니다.</p>
+
+<h2>수집하지 않는 것</h2>
+
+<ul>
+<li>이름, 전화번호, 이메일, 주소 등 신원 정보</li>
+<li>위치 정보</li>
+<li>연락처, 사진, 통화 기록, 문자</li>
+<li>광고 식별자, 기기 식별자</li>
+<li>앱 사용 기록, 분석 데이터, 오류 보고</li>
+</ul>
+
+<p>계정을 만들 필요가 없고, 로그인 기능 자체가 없습니다.</p>
+
+<h2>기기 안에만 저장되는 것</h2>
+
+<p>아래 항목은 <strong>앱의 전용 저장 공간에만 저장되며 기기 밖으로 나가지 않습니다.</strong></p>
+
+<table><tr><th>항목</th><th>내용</th></tr>
+<tr><td>PLC 접속 설정</td><td>사용자가 입력한 IP 주소, 포트, 네트워크 번호, PC 번호</td></tr>
+<tr><td>점검 기록</td><td>사용자가 입력한 정상 체크와 메모</td></tr>
+<tr><td>보기 설정</td><td>한 번에 볼 개수, 값 표시 형식 등</td></tr>
+</table>
+
+<p><strong>디바이스 코멘트 파일</strong>은 사용자가 시스템 파일 선택 창에서 고른 파일을 읽기만 하며,</p>
+<p>읽은 내용은 앱이 실행되는 동안 메모리에만 두고 따로 저장하거나 전송하지 않습니다.</p>
+
+<p><strong>CSV 내보내기</strong>는 사용자가 저장 위치를 직접 지정할 때만 동작하며, 지정한 위치에만 씁니다.</p>
+
+<h2>네트워크 사용</h2>
+
+<p>이 앱은 산업용 PLC(미쓰비시 MELSEC 계열)와 통신하는 도구입니다. 네트워크는 다음 두 가지에만</p>
+<p>사용합니다.</p>
+
+<p><strong>PLC 접속</strong> — 사용자가 입력한 IP 주소와 포트로 접속해 MC 프로토콜로 디바이스 값을</p>
+<p>읽고 씁니다. 이 통신은 사용자가 지정한 상대와만 이루어집니다.</p>
+
+<p><strong>PLC 검색</strong> — 사용자가 검색 버튼을 눌렀을 때만, 기기가 접속해 있는 로컬 네트워크 대역의</p>
+<p>주소에 사용자가 설정한 포트로 접속을 시도해 PLC 를 찾습니다. 산업 현장에서 PLC 의 IP 를</p>
+<p>모를 때 쓰는 기능이며, 찾은 결과는 화면에 보여 줄 뿐 어디에도 저장하거나 전송하지 않습니다.</p>
+<p>이 동작은 사용자가 직접 실행할 때만 일어납니다.</p>
+
+<p>앱은 개발자나 제3자의 서버에 접속하지 않습니다.</p>
+
+<h2>권한</h2>
+
+<table><tr><th>권한</th><th>사용 목적</th></tr>
+<tr><td><code>INTERNET</code></td><td>사용자가 지정한 PLC 와 TCP 통신</td></tr>
+<tr><td><code>ACCESS_NETWORK_STATE</code></td><td>PLC 검색 시 기기가 붙어 있는 네트워크 대역 확인</td></tr>
+</table>
+
+<h2>제3자 제공</h2>
+
+<p>제공하지 않습니다. 데이터를 수집하지 않으므로 제공할 데이터가 없습니다.</p>
+<p>앱에는 광고 SDK, 분석 SDK, 크래시 리포팅 도구가 포함되어 있지 않습니다.</p>
+
+<h2>데이터 삭제</h2>
+
+<ul>
+<li>점검 기록만 지우려면 앱 안에서 관련 기록을 지우면 됩니다.</li>
+<li>저장된 모든 내용을 지우려면 기기 설정에서 앱 데이터를 삭제하거나 앱을 제거하면 됩니다.</li>
+<li>앱을 제거하면 앱이 저장한 내용은 기기에서 모두 사라집니다.</li>
+</ul>
+
+<h2>아동</h2>
+
+<p>이 앱은 산업 설비 정비를 위한 도구이며 아동을 대상으로 하지 않습니다.</p>
+
+<h2>변경</h2>
+
+<p>이 방침이 바뀌면 이 문서의 최종 수정일을 갱신하고 앱 업데이트와 함께 알립니다.</p>
+
+<h2>문의</h2>
+
+<p>개인정보 처리에 관한 문의는 아래로 연락 주십시오.</p>
+
+<ul>
+<li>이메일: <a href="mailto:jjp43@naver.com">jjp43@naver.com</a></li>
+</ul>
+
+<footer>PLC 코멘트 뷰어 · <a href="mailto:jjp43@naver.com">jjp43@naver.com</a></footer>
+</body>
+</html>
