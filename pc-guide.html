@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLC Toolkit PC 사용설명서 · Winsh-PEN</title>
+<meta name="description" content="PLC-Toolkit-PC.exe 하나로 실행합니다. 별도 Python·Excel 설치나 _internal 폴더가 필요 없습니다. 코멘트 CSV·엑셀과 점검 기록을 정리하고 폰과 동기화합니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--bg:#f5f6f8;--surface:#fff;--line:#e3e6ea;--text:#15181d;--muted:#5d6672;--accent:#e8710a;--accent-soft:#fff1e4;--code:#eef0f3;--grid:rgba(21,24,29,.045);--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--surface:#171a20;--line:#272c34;--text:#e8eaed;--muted:#9aa3ae;--accent:#ff8a2a;--accent-soft:#2a1d10;--code:#222730;--grid:rgba(255,255,255,.035);--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25)}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:16px}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;word-break:keep-all;overflow-wrap:anywhere;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+a{color:var(--accent)}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+.top{padding:24px 0 0}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--text)}
+.back svg{width:16px;height:16px}
+header{padding:28px 0 28px;display:flex;gap:18px;align-items:flex-start}
+header img{flex:0 0 64px;width:64px;height:64px;border-radius:16px;object-fit:contain}
+.eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+h1{font-size:clamp(24px,4.5vw,32px);line-height:1.3;font-weight:800;letter-spacing:-.025em}
+.lead{margin-top:8px;color:var(--muted);font-size:15.5px}
+.cta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);text-decoration:none}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn svg{width:16px;height:16px}
+nav.toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+nav.toc b{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+nav.toc ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
+nav.toc a{display:inline-block;font-size:13.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);text-decoration:none}
+nav.toc a:hover{filter:brightness(.97)}
+main section{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+main h2{font-size:20px;font-weight:700;letter-spacing:-.015em;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+main h2 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:800}
+main p{margin:10px 0}
+main ul{list-style:none;margin:12px 0}
+main ul li{position:relative;padding-left:16px;margin:7px 0;font-size:15px}
+main ul li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--muted)}
+main ol{list-style:none;counter-reset:s;margin:12px 0}
+main ol li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;margin:8px 0;border:1px solid var(--line);border-radius:12px;font-size:15px}
+main ol li::before{content:counter(s);position:absolute;left:14px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;line-height:1}
+main .gap + ul{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line)}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.88em;background:var(--code);padding:1px 6px;border-radius:5px}
+kbd{font-family:inherit;font-size:12px;font-weight:700;padding:1px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--surface);white-space:nowrap}
+.tbl{overflow-x:auto;margin:6px -4px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:700}
+td:first-child{white-space:nowrap}
+footer{padding:20px 0 40px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--text);font-weight:600;text-decoration:none}
+@media (max-width:520px){header{flex-direction:column;gap:12px;padding:20px 0}header img{width:56px;height:56px}main section{padding:18px}main ol li{padding-left:44px}td:first-child{white-space:normal}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="https://winsh-pen.github.io/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Winsh-PEN 전체 앱</a></div>
+  <header>
+    <img src="img/icon.png" alt="" width="64" height="64">
+    <div>
+      <div class="eyebrow">PLC 툴박스 · Windows PC</div>
+      <h1>PLC Toolkit PC 사용설명서</h1>
+      <p class="lead"><code>PLC-Toolkit-PC.exe</code> 하나로 실행합니다. 별도 Python·Excel 설치나 <code>_internal</code> 폴더가 필요 없습니다. 코멘트 CSV·엑셀과 점검 기록을 정리하고 폰과 동기화합니다.</p>
+      <div class="cta"><a class="btn primary" href="https://github.com/Winsh-PEN/plcviewer-privacy/releases/latest/download/PLC-Toolkit-PC.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>PC판 다운로드</a><a class="btn" href="./">앱 소개</a></div>
+    </div>
+  </header>
+  <nav class="toc"><b>목차</b><ol><li><a href="#s1">직접 자동 동기화</a></li><li><a href="#s2">수동 파일 전달: PC → 모바일 → PC</a></li><li><a href="#s3">도면 열기·IO 스티커 배치</a></li><li><a href="#s4">스티커 크기·점검 결과</a></li><li><a href="#s5">도면 저장·불러오기</a></li><li><a href="#s6">스티커를 유지한 도면 교체</a></li><li><a href="#s7">스티커 크기 일괄 변경</a></li></ol></nav>
+  <main>
+    <section id="s1">
+<h2><span class="n">1</span>직접 자동 동기화</h2>
+<ol>
+<li>PC에서 코멘트 CSV·엑셀을 열고 <strong>PC 작업 저장</strong>으로 <code>.plctk</code> 파일을 만듭니다.</li>
+<li><strong>PC·폰 자동 동기화</strong>를 열고 폰에서 접속할 <strong>PC 주소</strong>를 고릅니다. 같은 Wi-Fi/LAN의 PC 주소나 양쪽에 연결한 Tailscale 주소를 사용하세요. 기본 포트는 <strong>8767</strong>입니다.</li>
+<li><strong>동기화 시작 → 연결 코드 복사</strong>를 누릅니다. 코드는 5분 동안 한 번 사용할 수 있으며, 만료되면 <strong>새 연결 코드</strong>를 누릅니다.</li>
+<li>Android 앱의 <strong>PLC 연결 → PC 직접 동기화</strong>에서 코드를 붙여넣고 연결합니다. 처음 연결할 때 현재 폰 자료의 보관·교체 안내를 확인하세요.</li>
+<li>두 앱이 열려 있고 PC 동기화가 시작된 동안 코멘트·OK/NG·메모·PDF/사진·IO 스티커 배치가 자동으로 저장·동기화됩니다. 폰 앱이 화면에 열려 있을 때 동기화하며, 휴대폰이 잠기거나 앱이 배경으로 가면 다시 열 때 이어집니다.</li>
+<li>PC가 꺼져 있거나 연결이 끊겨도 이미 받은 자료는 각 기기에 저장되어 계속 볼 수 있습니다. 오프라인 변경은 다시 연결하면 합칩니다.</li>
+<li>같은 항목을 양쪽에서 다르게 수정하면 자동으로 덮어쓰지 않습니다. <strong>서로 바뀐 내용 확인</strong>에서 PC와 폰·공유 내용을 보고 남길 쪽을 고릅니다. 서로 다른 항목의 변경은 함께 반영합니다.</li>
+</ol>
+<div class="gap"></div>
+
+<ul>
+<li>PC에서 행 편집은 <strong>선택 1개 저장</strong>으로 확정하세요. 입력 중인 문장은 동기화가 지우지 않으며, 확정한 편집은 PC 작업에 자동 저장합니다.</li>
+<li>저장된 작업에서 도면을 열거나 배치하면 원본과 배치가 작업에 저장됩니다. <strong>작업 도면 열기</strong>로 다시 열 수 있고, 편집 충돌 시 보관된 초안도 이 목록에서 찾을 수 있습니다.</li>
+<li>연결이 안 되면 Windows 방화벽에서 <strong>PLC Toolkit PC의 TCP 8767 수신</strong>을 필요한 LAN/Tailscale 범위에 허용했는지 확인하세요. 포트를 바꿨다면 그 포트를 사용합니다. 이 앱은 방화벽 규칙을 자동 변경하지 않습니다.</li>
+<li>인터넷의 별도 서버나 계정은 필요하지 않습니다. 폰이 PC 주소로 접속할 수 있어야 하며, PC와 폰이 서로 다른 네트워크이면 Tailscale 등 연결 경로가 필요합니다.</li>
+<li><strong>중지</strong>는 PC의 동기화 수신을 닫습니다. <strong>등록 기기 해제</strong>는 모든 등록 폰의 접속 권한을 해제하며, 다시 연결할 때 새 코드를 사용합니다. 이미 저장된 자료는 유지됩니다.</li>
+<li><code>.plctk</code> 파일과 같은 이름의 <code>.sync</code> 폴더를 <strong>함께 보관·백업</strong>하세요. 예: <code>현장A.plctk</code> + <code>현장A.sync</code>. <code>.sync</code>에는 도면 원본·이전 공유 내용·기기 등록·암호화 연결 키가 있습니다.</li>
+<li>기기 등록 정보는 현재 Windows 사용자 계정에 연결되어 있습니다. 다른 PC나 다른 Windows 사용자로 옮길 때는 자료를 수동 파일로 옮겨 새 작업으로 연결하세요. 같은 PC·사용자의 재시작에는 등록이 유지됩니다.</li>
+<li>PLC 조회 연결과 자료 동기화 연결은 별개입니다. 동기화가 PLC 출력이나 쓰기 잠금을 변경하지 않습니다.</li>
+</ul>
+    </section>
+    <section id="s2">
+<h2><span class="n">2</span>수동 파일 전달: PC → 모바일 → PC</h2>
+<ol>
+<li><strong>코멘트 CSV·엑셀 열기</strong>: UTF-8, UTF-16, CP949 CSV·탭 텍스트 또는 <code>.xlsx</code>를 읽습니다. 엑셀은 가져올 시트를 선택하고 주소/디바이스·내용/코멘트 머리글을 사용합니다. 엑셀에서 복사한 두 열은 목록을 누르고 Ctrl+V로 넣을 수 있습니다.</li>
+<li>행을 선택하고 코멘트·판정·메모를 고친 뒤 <strong>선택 1개 저장</strong>을 누릅니다. Ctrl/Shift로 여러 행을 선택해 판정만 일괄 적용할 수도 있습니다.</li>
+<li><strong>모바일용 코멘트 저장</strong>으로 CSV를 저장하고 USB·공유폴더·메신저로 폰에 옮깁니다. 모바일 앱에서 코멘트 파일을 여세요.</li>
+<li>모바일에서 점검한 뒤 <strong>점검 기록 → 파일 내보내기</strong>로 JSON을 저장해 PC로 옮깁니다.</li>
+<li>PC에서 같은 코멘트를 열고 <strong>모바일 점검 기록 열기</strong>를 누릅니다. 판정과 메모가 교체됩니다. IO와 서보 센서 점검 항목을 모두 읽습니다.</li>
+<li>검색 또는 NG/OK/미점검 필터를 걸고 <strong>결과 CSV·엑셀 추출</strong>을 누릅니다. <strong>화면에 표시된 항목만</strong> 내보냅니다. 전체 결과를 뽑으려면 검색을 비우고 판정을 전체로 바꾸세요.</li>
+</ol>
+<div class="gap"></div>
+
+<ul>
+<li><strong>PC 작업 저장</strong> <code>.plctk</code>: 코멘트·판정·메모·원래 기록 정보와 도면 목록을 보관합니다. 도면 원본은 같은 이름의 <code>.sync</code> 폴더에 저장합니다.</li>
+<li><strong>모바일용 점검 기록 저장</strong> JSON: 모바일 앱의 기록 가져오기에서 열 수 있습니다. 코멘트는 JSON에 없으므로 CSV도 따로 전달하세요.</li>
+<li>코멘트 CSV로 보낼 때 줄바꿈은 공백으로 바꿉니다. 모바일의 줄 단위 CSV 읽기와 호환됩니다. PC 작업과 엑셀 보고서에서는 원래 문장을 유지합니다.</li>
+<li>결과는 새 파일로 출력합니다. 원래 엑셀 양식의 빈 칸 채우기와 GXW 직접 열기는 아직 포함하지 않았습니다.</li>
+<li>아직 <code>.plctk</code>로 저장하지 않은 작업은 자동 저장 대상이 아닙니다. 먼저 PC 작업을 저장하세요.</li>
+</ul>
+    </section>
+    <section id="s3">
+<h2><span class="n">3</span>도면 열기·IO 스티커 배치</h2>
+<ul>
+<li>메인 화면에서 <strong>도면 IO 배치</strong>를 엽니다. PDF 또는 사진을 넣고 IO 목록에서 주소를 고른 뒤 도면의 빈 곳을 클릭하면 스티커가 생깁니다. 주소를 직접 입력해도 됩니다.</li>
+<li>스티커를 끌어 이동하고 왼쪽 폭 슬라이더로 크기를 바꿉니다. 휠로 확대·축소, 오른쪽 버튼을 끌어 도면 이동, 맞춤으로 전체 보기로 돌아갑니다.</li>
+<li>ST 비트 스티커는 지원하지 않습니다. ST 코멘트와 점검 기록은 보관할 수 있습니다.</li>
+<li>PDF는 페이지별로 스티커를 저장합니다. 최대 256개, 원본은 30MB 이하·PDF 1000쪽 이하입니다.</li>
+<li><strong>도면 저장</strong>으로 <code>.plcdraw</code>를 저장하고 모바일 <strong>PLC 연결 → 도면 IO → PC 도면 가져오기</strong>에서 엽니다.</li>
+<li>모바일에서 사진/PDF를 직접 열어 스티커를 만들 수도 있습니다. 편집 중 스티커를 터치하면 IO·크기를 바꾸고 끌면 이동합니다.</li>
+<li>모바일에서 <strong>IO 점검</strong> 탭은 상태 조회와 OK/NG 기록, <strong>출력 조작</strong> 탭은 스티커 선택 후 별도 ON/OFF 출력 버튼을 제공합니다. 쓰기 잠금을 해제한 경우에만 출력 버튼을 누를 수 있습니다. 회색 — 표시와 끊김 상태에서는 쓰지 않습니다. 읽기 상태는 3초 이상 오래되면 미확인으로 표시합니다.</li>
+<li>모바일의 <strong>도면 내보내기</strong> 파일은 PC의 <strong>도면 불러오기</strong>로 다시 편집할 수 있습니다.</li>
+<li>PC의 PLC 연결은 읽기 전용입니다. 도면 화면에 PLC 주소·MC 포트를 넣고 <strong>조회 시작</strong>을 누르면 현재 페이지의 IO를 실시간 조회합니다. 확대·이동 중에도 조회합니다. 배경은 ON 녹색 / OFF 청색 / 미확인 회색이며, 수신이 오래되거나 끊기면 현재값을 지웁니다.</li>
+<li>직접 동기화로 작업에 저장한 도면과 배치를 자동 전달할 수 있습니다. 기존 <code>.plcdraw</code> 파일 전달도 계속 지원합니다.</li>
+</ul>
+    </section>
+    <section id="s4">
+<h2><span class="n">4</span>스티커 크기·점검 결과</h2>
+<ul>
+<li>폭은 도면의 <strong>0.1~40%</strong>로 입력하며 기본은 2%입니다. 높이와 글자도 비례하여 줄어듭니다. 숫자 입력 후 Enter 또는 슬라이더를 사용하세요.</li>
+<li>마우스 위치를 기준으로 최대 64배 확대합니다. 스티커를 더블클릭하면 주소·크기 수정 창이 열립니다.</li>
+<li>스티커를 선택해 왼쪽 <strong>OK / NG / 초기화</strong>로 점검합니다. 같은 IO의 스티커와 메인 IO 목록에 함께 반영되며 메모는 유지합니다. PLC 출력은 바꾸지 않습니다.</li>
+<li><strong>조회 시작</strong> 시 배치 편집이 해제됩니다. 스티커를 선택해 점검하거나 휠/오른쪽 끌기로 도면을 확인하세요. 배치를 바꾸려면 오른쪽 위 <strong>배치 편집</strong>을 켭니다.</li>
+<li>PLC ON/OFF 상태와 점검 OK/NG는 별개입니다. 상태는 스티커 배경과 두 번째 줄, 점검은 테두리와 왼쪽 상세 영역에 나타납니다.</li>
+<li>직접 동기화에서는 점검 결과와 도면이 함께 전달됩니다. 수동 파일 방식에서 <strong>도면 저장</strong>은 도면과 IO 배치만 포함하므로 점검 결과를 폰에 옮길 때는 점검 기록 JSON도 전달하세요.</li>
+<li>작은 스티커가 든 도면을 폰에서 열 수 없다면 모바일 앱을 최신 버전으로 업데이트하세요.</li>
+</ul>
+    </section>
+    <section id="s5">
+<h2><span class="n">5</span>도면 저장·불러오기</h2>
+<ul>
+<li>도면 창 위의 <strong>도면 저장(Ctrl+S)</strong> / <strong>도면 불러오기(Ctrl+O)</strong>로 원본과 IO 배치를 <code>.plcdraw</code> 한 파일에 저장·복원할 수 있습니다. OK/NG·메모를 포함한 전체 작업은 메인 화면의 <strong>PC 작업 저장</strong>을 사용하세요.</li>
+</ul>
+    </section>
+    <section id="s6">
+<h2><span class="n">6</span>스티커를 유지한 도면 교체</h2>
+<ul>
+<li>도면을 연 상태에서 <strong>도면만 교체</strong>를 누르고 새 PDF·사진을 선택합니다. 기존 IO 주소·위치 비율·크기·페이지 번호와 점검 결과를 유지합니다.</li>
+<li>도면 내용·여백·가로세로 비율이 달라지면 실제 대상과 스티커 위치가 어긋날 수 있으니 교체 후 확인하세요.</li>
+<li>스티커가 붙어 있는 페이지가 새 파일에 없으면 교체하지 않고 기존 자료를 유지합니다.</li>
+<li>교체한 결과는 <strong>도면 저장</strong>으로 저장할 수 있습니다. PC 작업에 포함된 도면은 기존 자동 저장·직접 동기화에도 반영됩니다.</li>
+</ul>
+    </section>
+    <section id="s7">
+<h2><span class="n">7</span>스티커 크기 일괄 변경</h2>
+<ul>
+<li>도면 창의 <strong>크기 일괄 변경</strong>에서 <strong>도면 전체 / 현재 페이지</strong>를 선택하고 스티커 폭을 0.1~40%로 입력합니다. 적용하면 대상 스티커가 같은 크기로 바뀝니다.</li>
+<li>IO 주소·위치·페이지·점검 결과는 유지합니다. 취소하면 바뀌지 않습니다. 바뀐 크기는 도면 저장·직접 동기화에도 반영됩니다.</li>
+<li><strong>스티커 표시</strong>를 끄면 배치를 유지한 채 도면만 볼 수 있습니다. 숨김 중에도 도면을 확대·축소할 수 있습니다.</li>
+<li><strong>코멘트 표시</strong>를 켜면 IO 목록의 코멘트를 주소와 함께 확인할 수 있습니다. 긴 내용은 스티커에 마우스를 올리거나 선택해 확인하세요. 표시 옵션은 다른 기기의 배치를 바꾸지 않습니다.</li>
+</ul>
+    </section>
+  </main>
+  <footer><span>© Winsh-PEN</span><span>문의 <a href="mailto:jjp4311@gmail.com">jjp4311@gmail.com</a></span></footer>
+</div>
+</body>
+</html>
